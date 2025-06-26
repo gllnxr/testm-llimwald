@@ -1,33 +1,53 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Waldstücke Stuttgart Karte</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<style>
-  body, html, #map { margin: 0; padding: 0; width: 100%; height: 100%; }
-</style>
+  <meta charset="UTF-8" />
+  <title>Waldgebiete Stuttgart (WMS)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+  <style>
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
-<div id="map"></div>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-  var map = L.map('map').setView([48.7758, 9.1829], 12);
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map("map").setView([48.775, 9.2], 12); // Stuttgart-Zentrum
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; OpenStreetMap'
-  }).addTo(map);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
-  var waldLayer = L.tileLayer.wms('https://www.stuttgart.de/wms/service?', {
-    layers: 'GEOLINE_FLEX:A36_BIOTOP_WALDBIOTOP',
-    format: 'image/png',
-    transparent: true,
-    version: '1.3.0',
-    styles: '',
-    attribution: '&copy; Stadt Stuttgart'
-  }).addTo(map);
-</script>
+    const wmsUrl = "https://geoserver.stuttgart.de/geoserver/ows?";
+
+    const staatlich = L.tileLayer.wms(wmsUrl, {
+      layers: "GEOLINE_FLEX:A67_GBE_WALDDISTRIKT_STAATLICH_EPSG25832",
+      format: "image/png",
+      transparent: true,
+      version: "1.3.0",
+      attribution: "Stadt Stuttgart",
+      crs: L.CRS.EPSG4326 // Nutzt CRS:84 – Leaflet erwartet das in EPSG:4326
+    });
+
+    const staedtisch = L.tileLayer.wms(wmsUrl, {
+      layers: "GEOLINE_FLEX:A67_GBE_WALDDISTRIKT_STAEDTISCH_EPSG25832",
+      format: "image/png",
+      transparent: true,
+      version: "1.3.0",
+      attribution: "Stadt Stuttgart",
+      crs: L.CRS.EPSG4326
+    });
+
+    // Beide Layer hinzufügen
+    staatlich.addTo(map);
+    staedtisch.addTo(map);
+  </script>
 </body>
 </html>
