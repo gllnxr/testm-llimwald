@@ -26,12 +26,13 @@
   }).addTo(map);
 
   // WMS-Layer (hier deinen Layer-Namen und die URL einfügen)
-  var waldLayer = L.tileLayer.wms('WMS_URL_HIER_EINFÜGEN', {
-    layers: 'LAYER_NAME_HIER_EINFÜGEN',
-    format: 'image/png',
-    transparent: true,
-    attribution: '&copy; Stadt Stuttgart'
-  }).addTo(map);
+  var waldLayer = L.tileLayer.wms('https://www.stuttgart.de/wms/service?', {
+  layers: 'GEOLINE_FLEX:A36_BIOTOP_WALDBIOTOP',
+  format: 'image/png',
+  transparent: true,
+  crs: L.CRS.EPSG3857,
+  attribution: '&copy; Stadt Stuttgart'
+}).addTo(map);
 </script>
 </body>
 </html>
