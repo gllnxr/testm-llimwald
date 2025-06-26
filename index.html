@@ -4,7 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Waldstücke Stuttgart Karte</title>
-<!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
   body, html, #map { margin: 0; padding: 0; width: 100%; height: 100%; }
@@ -12,28 +11,23 @@
 </head>
 <body>
 <div id="map"></div>
-
-<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-  // Karte zentrieren auf Stuttgart
   var map = L.map('map').setView([48.7758, 9.1829], 12);
 
-  // Basiskarte
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; OpenStreetMap'
   }).addTo(map);
 
-  // WMS-Layer (hier deinen Layer-Namen und die URL einfügen)
   var waldLayer = L.tileLayer.wms('https://www.stuttgart.de/wms/service?', {
-  layers: 'GEOLINE_FLEX:A36_BIOTOP_WALDBIOTOP',
-  format: 'image/png',
-  transparent: true,
+    layers: 'GEOLINE_FLEX:A36_BIOTOP_WALDBIOTOP',
+    format: 'image/png',
+    transparent: true,
     version: '1.3.0',
-  crs: L.CRS.EPSG3857,
-  attribution: '&copy; Stadt Stuttgart'
-}).addTo(map);
+    styles: '',
+    attribution: '&copy; Stadt Stuttgart'
+  }).addTo(map);
 </script>
 </body>
 </html>
